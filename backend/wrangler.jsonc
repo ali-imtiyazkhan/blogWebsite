@@ -1,0 +1,37 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "backend",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-09-16",
+  
+  "vars": {
+    "DATABASE_URL": "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza18xT0UwdUJuQnZhVmdfSWxMX2VIR1YiLCJhcGlfa2V5IjoiMDFLNUFCSFpTTjFCRUVNOUNYUEE4MkM5NjUiLCJ0ZW5hbnRfaWQiOiJkMTRjMDY4ZDE3ZjZlYjZiY2RiOWVmOGQxOTBjZjE0ZDJlOTFjYjM1MzRkODFmNjYxMWRhNzJkYmIyNjY5OWZlIiwiaW50ZXJuYWxfc2VjcmV0IjoiNWM1MTQ2ZTYtM2QzZS00ZDRjLThhNDYtOGVkOTBhMGI2NmYwIn0.RdSmH1sCpuFOKl4BVSdAmqgRXLqFLVdw4IcQ-Ovc6s0",
+    "JWT_SECRET": "super-secret-key"
+  },
+  // "kv_namespaces": [
+  //   {
+  //     "binding": "MY_KV_NAMESPACE",
+  //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  //   }
+  // ],
+  // "r2_buckets": [
+  //   {
+  //     "binding": "MY_BUCKET",
+  //     "bucket_name": "my-bucket"
+  //   }
+  // ],
+  // "d1_databases": [
+  //   {
+  //     "binding": "MY_DB",
+  //     "database_name": "my-database",
+  //     "database_id": ""
+  //   }
+  // ],
+  // "ai": {
+  //   "binding": "AI"
+  // },
+  // "observability": {
+  //   "enabled": true,
+  //   "head_sampling_rate": 1
+  // }
+}
