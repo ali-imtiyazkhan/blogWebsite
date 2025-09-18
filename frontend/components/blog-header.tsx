@@ -25,29 +25,28 @@ export function BlogHeader() {
               <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
-              href="/About"
+              href="/router/About"
               className="text-gray-800 hover:text-gray-900 transition-all duration-300 relative group"
             >
               About
               <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
-              href="/Categories"
+              href="/router/Categories"
               className="text-gray-800 hover:text-gray-900 transition-all duration-300 relative group"
             >
               Categories
               <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
-              href="/Contact"
+              href="/router/Help"
               className="text-gray-800 hover:text-gray-900 transition-all duration-300 relative group"
             >
-              Contact
+              help
               <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
             </a>
           </nav>
 
-          {/* Search and Mobile Menu */}
           <div className="flex items-center space-x-4">
             <div className="hidden sm:flex items-center space-x-2">
               <div className="relative">
@@ -55,7 +54,7 @@ export function BlogHeader() {
                 <Input placeholder="Search articles..." className="pl-10 w-64" />
               </div>
             </div>
-            <Button variant="ghost" size="icon" className="md:hidden">
+            <Button variant="ghost" size="icon" className="md:hidden hover:bg-gray-800">
               <Menu className="w-5 h-5" />
             </Button>
           </div>

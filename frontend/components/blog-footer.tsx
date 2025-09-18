@@ -1,8 +1,15 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Github, Twitter, Linkedin, Mail } from "lucide-react"
 
 export function BlogFooter() {
+  function handleLogOut(){
+    localStorage.removeItem("token");
+    window.location.href = "/router/SignIn"
+
+  }
   return (
     <footer className="bg-muted mt-20">
       <div className="container mx-auto px-4 py-12">
@@ -115,6 +122,8 @@ export function BlogFooter() {
 
         <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
           <p>&copy; 2024 My Blog. All rights reserved.</p>
+          
+          <Button onClick={handleLogOut} className="bg-gray-800 hover:bg-red-600">Logout</Button>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-primary transition-colors">
               Privacy Policy

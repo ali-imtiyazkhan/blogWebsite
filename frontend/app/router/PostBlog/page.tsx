@@ -1,5 +1,6 @@
 "use client"
 
+import { BlogHeader } from "@/components/blog-header"
 import { useState } from "react"
 
 export default function PostBlogPage() {
@@ -14,7 +15,7 @@ export default function PostBlogPage() {
     try {
       const token = localStorage.getItem("token")
       if (!token) {
-        setMessage("⚠️ Please sign in first.")
+        setMessage("Please sign in first.")
         return
       }
 
@@ -33,20 +34,25 @@ export default function PostBlogPage() {
 
       if (res.ok) {
         const data = await res.json()
-        setMessage(`✅ Blog posted! ID: ${data.id}`)
+        setMessage(` Blog posted `)
         setTitle("")
         setContent("")
+        window.location.href = "/router/GetBlog"
       } else {
         const err = await res.json()
-        setMessage(`❌ Error: ${err.message || "Failed to post blog"}`)
+        setMessage(`Error: ${err.message || "Failed to post blog"}`)
       }
     } catch (err) {
       console.error(err)
-      setMessage("❌ Something went wrong")
+      setMessage(" Something went wrong")
     }
   }
 
   return (
+
+    <div>
+  <BlogHeader/>
+   
     <div className="max-w-2xl mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold mb-6">Post a New Blog</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -83,5 +89,7 @@ export default function PostBlogPage() {
 
       {message && <p className="mt-4 text-center">{message}</p>}
     </div>
-  )
+
+   </div>
+   )
 }

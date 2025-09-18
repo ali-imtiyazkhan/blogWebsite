@@ -43,9 +43,6 @@ export function BlogPosts() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold text-balance">Latest Articles</h2>
-        <Badge variant="secondary" className="text-sm bg-gray-800">
-          {blogPosts.length} posts
-        </Badge>
       </div>
 
       <div className="space-y-8">

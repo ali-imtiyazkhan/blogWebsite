@@ -1,10 +1,24 @@
-import { BlogHeader } from "@/components/blog-header"
-import { BlogHero } from "@/components/blog-hero"
-import { BlogPosts } from "@/components/blog-posts"
-import { BlogSidebar } from "@/components/blog-sidebar"
-import { BlogFooter } from "@/components/blog-footer"
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+import { BlogHeader } from "@/components/blog-header";
+import { BlogHero } from "@/components/blog-hero";
+import { BlogPosts } from "@/components/blog-posts";
+import { BlogSidebar } from "@/components/blog-sidebar";
+import { BlogFooter } from "@/components/blog-footer";
 
 export default function BlogHome() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/router/SignIn");
+    }
+  }, [router]);
+
   return (
     <div className="min-h-screen bg-background">
       <BlogHeader />
@@ -21,5 +35,5 @@ export default function BlogHome() {
       </div>
       <BlogFooter />
     </div>
-  )
+  );
 }
