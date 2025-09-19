@@ -22,4 +22,5 @@ model Post {
   published Boolean
   author    User    @relation(fields: [authorId], references: [id])
   authorId  String
+  categories String?
 }

@@ -1,7 +1,10 @@
 "use client"
+
 import { BlogHeader } from "@/components/blog-header"
-import { BlogPosts } from "@/components/blog-posts"
 import { useEffect, useState } from "react"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Calendar, Clock, User, Loader2 } from "lucide-react"
 
 interface Blog {
   id: string
@@ -11,6 +14,8 @@ interface Blog {
   authorId: string
   createdAt: string
   updatedAt: string
+  categories?: string | null
+  image?: string | null
 }
 
 export default function BlogsPage() {
@@ -25,11 +30,17 @@ export default function BlogsPage() {
     return new Date(randomTime).toLocaleDateString()
   }
 
+  const getReadTime = (content: string) => {
+    const words = content.split(" ").length
+    const minutes = Math.ceil(words / 200)
+    return `${minutes} min read`
+  }
+
   useEffect(() => {
     async function fetchBlogs() {
       try {
         const token = localStorage.getItem("token")
-        const res = await fetch("http://127.0.0.1:8787/api/v1/blog/bulk", {
+        const res = await fetch("https://backend.blog-backend-imtiyaz.workers.dev/api/v1/blog/bulk", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -40,12 +51,16 @@ export default function BlogsPage() {
         if (res.ok) {
           const data = await res.json()
 
-          const blogsWithRandomDates = (data.blogs || []).map((blog: Blog) => ({
+          const blogsWithExtras = (data.blogs || []).map((blog: Blog) => ({
             ...blog,
             createdAt: getRandomDate(),
+            image:
+              blog.image ||
+              `https://picsum.photos/seed/${blog.id}/600/400`,
+            readTime: getReadTime(blog.content),
           }))
 
-          setBlogs(blogsWithRandomDates)
+          setBlogs(blogsWithExtras)
         } else {
           const err = await res.json()
           setError(err.message || "Failed to load blogs")
@@ -63,36 +78,68 @@ export default function BlogsPage() {
 
   if (loading)
     return (
-      <p className="min-w-full flex justify-center items-center text-center py-10">
-        Loading blogs...
-      </p>
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-gray-600" />
+      </div>
     )
-  if (error) return <p className="text-center py-10 text-red-500"> {error}</p>
+
+  if (error) return <p className="text-center py-10 text-red-500">{error}</p>
 
   return (
     <div>
       <BlogHeader />
-      <div className="max-w-3xl mx-auto py-10 px-4">
+      <div className="max-w-5xl mx-auto py-10 px-4">
         <h1 className="text-3xl font-bold mb-6">All Blogs</h1>
         {blogs.length === 0 ? (
           <p className="text-gray-600">No blogs found.</p>
         ) : (
-          <div className="space-y-6">
-            {blogs.map((blog) => (
-              <div
-                key={blog.id}
-                className="border p-4 rounded-lg shadow hover:shadow-md transition"
+          <div className="space-y-8">
+            {blogs.map((post) => (
+              <Card
+                key={post.id}
+                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
               >
-                <h2 className="text-xl font-semibold">{blog.title}</h2>
-                <p className="text-gray-700 mt-2">{blog.content}</p>
-                <p className="text-sm text-gray-500 mt-2">
-                  Published: {blog.published ? " Yes" : " No"}
-                </p>
-                <p className="text-xs text-gray-400">
-                  Created at: {blog.createdAt}
-                </p>
-                {/* <BlogPosts/> */}
-              </div>
+                <div className="md:flex">
+                  <div className="md:w-1/3">
+                    <img
+                      src={post.image || "/placeholder.svg"}
+                      alt={post.title}
+                      className="w-full h-48 md:h-full object-cover"
+                    />
+                  </div>
+                  <div className="md:w-2/3">
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        {post.categories && (
+                          <Badge variant="outline">{post.categories}</Badge>
+                        )}
+                      </div>
+                      <h3 className="text-2xl font-bold text-balance hover:text-gray-700 transition-colors">
+                        {post.title}
+                      </h3>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <p className="text-muted-foreground text-pretty mb-4 leading-relaxed">
+                        {post.content.slice(0, 150)}...
+                      </p>
+                      <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <User className="w-4 h-4" />
+                          {post.authorId || "unknown user"}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" />
+                          {post.createdAt}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          {post.updatedAt}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </div>
+                </div>
+              </Card>
             ))}
           </div>
         )}

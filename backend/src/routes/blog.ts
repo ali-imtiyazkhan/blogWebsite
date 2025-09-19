@@ -58,7 +58,8 @@ blogRouter.post("/postblog", async (c) => {
       content: body.content,
       published: body.published ?? false,
       authorId: String(authorId),
-    },
+      categories :body.categories
+    }
   });
 
   return c.json({ id: blog.id });
@@ -101,6 +102,7 @@ blogRouter.get("/bulk", async (c) => {
       title: true,
       content: true,
       published: true,
+      categories:true,
       author: {
         select: {
           name: true,
