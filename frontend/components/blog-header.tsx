@@ -39,10 +39,10 @@ export function BlogHeader() {
               <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
-              href="/router/Help"
+              href="/router/AllAuthor"
               className="text-gray-800 hover:text-gray-900 transition-all duration-300 relative group"
             >
-              help
+              Authors
               <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
             </a>
           </nav>

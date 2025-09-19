@@ -112,16 +112,16 @@ blogRouter.get("/bulk", async (c) => {
   return c.json({ blogs });
 });
 
-blogRouter.get("/:id", async (c) => {
-  const id = c.req.param("id");
+blogRouter.get("/getByUser/:userId", async (c) => {
+  const userId = c.req.param("userId");
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
   try {
-    const blog = await prisma.post.findFirst({
+    const blogs = await prisma.post.findMany({
       where: {
-        id: String(id),
+        authorId: String(userId),
       },
       select: {
         id: true,
@@ -130,15 +130,23 @@ blogRouter.get("/:id", async (c) => {
         published: true,
         author: {
           select: {
+            id: true,
             name: true,
+            email: true,
           },
         },
       },
     });
 
-    return c.json({ blog });
+    if (blogs.length === 0) {
+      c.status(404);
+      return c.json({ message: "No blogs found for this user" });
+    }
+
+    return c.json({ blogs });
   } catch (e) {
-    c.status(411);
-    return c.json({ message: "Error while fetching blog post" });
+    console.error(e);
+    c.status(500);
+    return c.json({ message: "Error while fetching blogs by user" });
   }
 });

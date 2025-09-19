@@ -75,3 +75,22 @@ userRouter.post("/signin", async(c) => {
     }
     
 });
+
+userRouter.get("/getAllUser", async (c) => {
+  try {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const users = await prisma.user.findMany();
+
+    if (users.length === 0) {
+      return c.json({ message: "No users found" }, 404);
+    }
+
+    return c.json({ users });
+  } catch (error) {
+    console.error(error);
+    return c.json({ message: "Server Error" }, 500);
+  }
+});
