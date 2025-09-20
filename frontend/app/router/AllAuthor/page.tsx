@@ -42,7 +42,7 @@ export default function GetAllUser() {
             }
 
             try {
-                const res = await fetch("http://localhost:8787/api/v1/user/getAllUser", {
+                const res = await fetch("https://backend.blog-backend-imtiyaz.workers.dev/api/v1/user/getAllUser", {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
