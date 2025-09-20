@@ -36,7 +36,7 @@ export default function GetAllUser() {
 
             const token = localStorage.getItem("token");
             if (!token) {
-                setMessage(" Please sign in first");
+                setMessage(" Please sign in first then come ");
                 setLoading(false);
                 return;
             }
